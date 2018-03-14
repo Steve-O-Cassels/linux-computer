@@ -183,7 +183,7 @@ function save-computer(){
   cp ~/.zshrc ~/work/linux-computer
 }
 
-function computer-updates() {
+function computer-update-all() {
   sudo apt-get update && sudo apt-get upgrade && sudo apt-get dist-upgrade && sudo apt-get autoremove
   # Fetches the list of available updates
   # Strictly upgrades the current packages
