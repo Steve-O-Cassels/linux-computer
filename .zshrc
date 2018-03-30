@@ -1,11 +1,11 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
-
+CODE_FOLDER=$HOME/work
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="bira"
+ZSH_THEME="robbyrussell"
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -155,12 +155,10 @@ function dockerclean(){
   docker rm $(docker ps -a -q) && docker rmi $(docker images -q) && docker ps -a | cut -c-12 | xargs docker rm
 }
 
+alias s="git status"
+
 function work() {
    cd ~/work/"$@" && code .
-}
-
-function s() {
-  git status
 }
 
 function git-show() {
@@ -174,13 +172,9 @@ function gitlog-search(){
 function fiddler() {
   (mono ~/apps/fiddler/Fiddler.exe &)
 }
-z
+
 function port-status() {
   netstat -tulpn
-}
-
-function save-computer(){
-  cp ~/.zshrc ~/work/linux-computer
 }
 
 function computer-update-all() {
@@ -191,8 +185,26 @@ function computer-update-all() {
   # clean up
 }
 
+function pid-args-list(){ 
+  # expect pid as input
+  # output args to pid
+  ps -aux | grep "$@"
+}
+
 function max-user-watches(){
   cat /proc/sys/fs/inotify/max_user_watches
+}
+
+function backup() {
+  # expect file-name as input; e.g .zshrc
+ cp "$1"{,-backup."$(date +%Y-%m-%d_%H_%M_%S)"} 
+}
+function deploy-computer(){
+  backup .zshrc
+  cd ~/ && cp $CODE_FOLDER/osx-computer/.zshrc ~/.zshrc
+}
+function save-computer-config(){
+  cp ~/.zshrc $CODE_FOLDER/linux-computer/.zshrc
 }
 
 zle -N _fizsh-expand-or-complete-and-highlight _fizsh-expand-or-complete-and-highlight
