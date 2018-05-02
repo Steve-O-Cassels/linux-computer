@@ -156,6 +156,7 @@ function dockerclean(){
 }
 
 alias s="git status"
+alias git-reset-to-remote="git reset --hard origin/master"
 
 function work() {
    cd ~/work/"$@" && code .
@@ -167,6 +168,21 @@ function git-show() {
 
 function gitlog-search(){
   git log --grep="$@" --format=fuller
+}
+
+function network-connections(){
+  # list the current network connections
+   nmcli con
+}
+
+function pid-for(){
+  ps aux | grep $@
+}
+
+function pid-args-list(){ 
+  # expect pid as input
+  # output args to pid
+  ps -aux | grep "$@"
 }
 
 function fiddler() {
@@ -185,12 +201,6 @@ function computer-update-all() {
   # clean up
 }
 
-function pid-args-list(){ 
-  # expect pid as input
-  # output args to pid
-  ps -aux | grep "$@"
-}
-
 function max-user-watches(){
   cat /proc/sys/fs/inotify/max_user_watches
 }
@@ -200,8 +210,10 @@ function backup() {
  cp "$1"{,-backup."$(date +%Y-%m-%d_%H_%M_%S)"} 
 }
 function deploy-computer(){
+  echo backing up
   backup .zshrc
-  cd ~/ && cp $CODE_FOLDER/osx-computer/.zshrc ~/.zshrc
+  echo copying to ~/.zshrc
+  cp $CODE_FOLDER/linux-computer/.zshrc ~/.zshrc
 }
 function save-computer-config(){
   cp ~/.zshrc $CODE_FOLDER/linux-computer/.zshrc
