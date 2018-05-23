@@ -162,6 +162,10 @@ function work() {
    cd ~/work/"$@" && code .
 }
 
+function config-the-git(){
+  git config --global --add rebase.autostash true # don't make me stash manually and then pop it on git pull (rebase default)
+}
+
 function git-show() {
   git show ":/$@"
 }
