@@ -193,7 +193,7 @@ function port-status() {
   netstat -tulpn
 }
 
-function computer-update-all() {
+function update-computer-all() {
   sudo apt-get update && sudo apt-get upgrade && sudo apt-get dist-upgrade && sudo apt-get autoremove
   # Fetches the list of available updates
   # Strictly upgrades the current packages
