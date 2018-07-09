@@ -197,6 +197,23 @@ function port-status() {
   netstat -tulpn
 }
 
+function restart-network-adapter() {
+  # https://sysinfo.io/restart-network-ubuntu-16-04-xenial-xerus-linux/
+  # list connections
+  ifconfig
+  # list installed network cards
+  netstat -i
+  # list all PCI devices
+  lspci | egrep -i --color 'network|ethernet' 
+  echo flushing/removing IP information from interface then restart networking service
+  ip addr flush eth0 && systemctl restart networking.service
+}
+
+function restart-network-manager() {
+  nmcli networking off
+  nmcli networking on
+}
+
 function update-computer-all() {
   sudo apt-get update && sudo apt-get upgrade && sudo apt-get dist-upgrade && sudo apt-get autoremove
   # Fetches the list of available updates
