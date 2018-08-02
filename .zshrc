@@ -239,7 +239,7 @@ function backup() {
 }
 function deploy-computer(){
   echo backing up
-  backup .zshrc
+  backup ~/.zshrc
   echo copying to ~/.zshrc
   cp $CODE_FOLDER/linux-computer/.zshrc ~/.zshrc
 }
