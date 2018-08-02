@@ -209,6 +209,13 @@ function restart-network-adapter() {
   ip addr flush eth0 && systemctl restart networking.service
 }
 
+function connect-internet(){
+  echo restarting network manager
+  restart-network-manager
+  echo connecting to vpn
+  ~/vpn-sign-in.sh
+}
+
 function restart-network-manager() {
   nmcli networking off
   nmcli networking on
