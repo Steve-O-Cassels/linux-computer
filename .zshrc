@@ -45,7 +45,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=( git node npm nyan zsh-syntax-highlighting  )
+plugins=( git node npm zsh-syntax-highlighting  )
 
 # User configuration
 
@@ -243,8 +243,16 @@ function deploy-computer(){
   echo copying to ~/.zshrc
   cp $CODE_FOLDER/linux-computer/.zshrc ~/.zshrc
 }
-function save-computer-config(){
+function move-zshrc-to-repo(){
   cp ~/.zshrc $CODE_FOLDER/linux-computer/.zshrc
+}
+
+function kubernetes-dashboard(){
+  echo Must be on vpn
+  ~/vpn-sign-in.sh
+  echo Just skip password in the dialog
+  # non-blocking cli: background the `kubectl proxy` job with `&` to enable start chrome
+  kubectl proxy & google-chrome http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/overview?namespace=default
 }
 
 zle -N _fizsh-expand-or-complete-and-highlight _fizsh-expand-or-complete-and-highlight
