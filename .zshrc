@@ -276,3 +276,4 @@ export NVM_DIR="$HOME/.nvm"
 
 test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex" 
 [[ -s "$HOME/.kiex/scripts/kiex" ]] && source "$HOME/.kiex/scripts/kiex" # use elixir defined in the kiex default as thee global default
+if [ /usr/bin/kubectl ]; then source <(kubectl completion zsh); fi
