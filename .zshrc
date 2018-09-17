@@ -212,6 +212,7 @@ function restart-network-adapter() {
 function connect-internet(){
   echo restarting network manager
   restart-network-manager
+  sleep 3
   echo connecting to vpn
   ~/vpn-sign-in.sh
 }
@@ -276,4 +277,3 @@ export NVM_DIR="$HOME/.nvm"
 
 test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex" 
 [[ -s "$HOME/.kiex/scripts/kiex" ]] && source "$HOME/.kiex/scripts/kiex" # use elixir defined in the kiex default as thee global default
-if [ /usr/bin/kubectl ]; then source <(kubectl completion zsh); fi
