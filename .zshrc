@@ -248,6 +248,10 @@ function move-zshrc-to-repo(){
   cp ~/.zshrc $CODE_FOLDER/linux-computer/.zshrc
 }
 
+function debug-with-chrome(){
+  google-chrome --remote-debugging-port=9223
+}
+
 function kubernetes-dashboard(){
   echo Must be on vpn
   ~/vpn-sign-in.sh
