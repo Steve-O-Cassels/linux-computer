@@ -252,7 +252,29 @@ function debug-with-chrome(){
   google-chrome --remote-debugging-port=9223
 }
 
-function kubernetes-dashboard(){
+function k8s-pods-for-app(){
+  # expect app as input
+  kubectl get pods -l app="$1"
+}
+
+function k8s-pods-by-restart-count(){
+  # get pods for current namespace
+  kubectl get pods --sort-by='.status.containerStatuses[0].restartCount'
+}
+
+function k8s-pod-description(){
+  # expects pod-id as input
+  # for current context, describe a pod:
+  kubectl describe pod "$@"
+}
+
+function k8s-app-ingress-points(){
+  # expects app as input
+  # identify the ingress
+  kubectl get ingress "$@"
+}
+
+function k8s-dashboard(){
   echo Must be on vpn
   ~/vpn-sign-in.sh
   echo Just skip password in the dialog
