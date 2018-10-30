@@ -26,7 +26,7 @@ ZSH_THEME="robbyrussell"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
-# COMPLETION_WAITING_DOTS="true"
+COMPLETION_WAITING_DOTS="false"
 
 # Uncomment the following line if you want to disable marking untracked files
 # under VCS as dirty. This makes repository status check for large repositories
@@ -109,9 +109,9 @@ source_if_exists ~/.zsh_functions
 source_if_exists ~/proxyconf.sh
 
 # Hook in z jump
-function precmd () {
- _z --add "$(pwd -P)"
-}
+#function precmd () {
+#_z --add "$(pwd -P)"
+#}
 
 # Taken from https://github.com/zsh-users/fizsh/blob/master/fizsh-dev/scripts/fizsh-miscellaneous.zsh
 ################################################
@@ -121,6 +121,7 @@ function precmd () {
 # This is a bug in the syntax highlighting system (https://github.com/zsh-users/zsh-syntax-highlighting/issues/102)
 # We work around it by calling all types of highlighters explictily
 #
+
 function _fizsh-expand-or-complete-and-highlight() {
   zle expand-or-complete
   _zsh_highlight_highlighter_brackets_paint
@@ -252,26 +253,39 @@ function debug-with-chrome(){
   google-chrome --remote-debugging-port=9223
 }
 
+function k8s-list-services(){
+  k8s-set-namespace-production
+  kubectl get service
+}
+
 function k8s-pods-for-app(){
+  k8s-set-namespace-production
   # expect app as input
   kubectl get pods -l app="$1"
 }
 
 function k8s-pods-by-restart-count(){
+  k8s-set-namespace-production
   # get pods for current namespace
   kubectl get pods --sort-by='.status.containerStatuses[0].restartCount'
 }
 
 function k8s-pod-description(){
+  k8s-set-namespace-production
   # expects pod-id as input
   # for current context, describe a pod:
   kubectl describe pod "$@"
 }
 
 function k8s-app-ingress-points(){
+  k8s-set-namespace-production
   # expects app as input
   # identify the ingress
   kubectl get ingress "$@"
+}
+
+function k8s-set-namespace-production(){
+  kubectl config set-context $(kubectl config current-context) --namespace=production
 }
 
 function k8s-dashboard(){
@@ -303,3 +317,7 @@ export NVM_DIR="$HOME/.nvm"
 
 test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex" 
 [[ -s "$HOME/.kiex/scripts/kiex" ]] && source "$HOME/.kiex/scripts/kiex" # use elixir defined in the kiex default as thee global default
+source /home/cassels/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /opt/vault/vault vault
