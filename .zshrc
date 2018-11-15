@@ -239,15 +239,16 @@ function backup() {
   # expect file-name as input; e.g .zshrc
  cp "$1"{,-backup."$(date +%Y-%m-%d_%H_%M_%S)"} 
 }
-function deploy-computer(){
+function zshrc-deploy-from-repo(){
   echo backing up
   backup ~/.zshrc
   echo copying to ~/.zshrc
   cp $CODE_FOLDER/linux-computer/.zshrc ~/.zshrc
 }
-function move-zshrc-to-repo(){
+function zshrc-move-to-repo(){
   cp ~/.zshrc $CODE_FOLDER/linux-computer/.zshrc
 }
+alias zshrc-save-to-repo="zshrc-move-to-repo"
 
 function debug-with-chrome(){
   google-chrome --remote-debugging-port=9223
@@ -296,6 +297,11 @@ function k8s-dashboard(){
   kubectl proxy & google-chrome http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/overview?namespace=default
 }
 
+function k8s-help(){
+  google-chrome https://kubernetes.io/docs/reference/kubectl/cheatsheet/#interacting-with-running-pods
+}
+alias k8s-cheatsheet="k8s-help"
+
 zle -N _fizsh-expand-or-complete-and-highlight _fizsh-expand-or-complete-and-highlight
 
 bindkey "^I" _fizsh-expand-or-complete-and-highlight
@@ -317,7 +323,7 @@ export NVM_DIR="$HOME/.nvm"
 
 test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex" 
 [[ -s "$HOME/.kiex/scripts/kiex" ]] && source "$HOME/.kiex/scripts/kiex" # use elixir defined in the kiex default as thee global default
-source /home/cassels/.oh-my-zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /home/stephen/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/vault/vault vault

@@ -1,3 +1,12 @@
+## Set default shell to zsh
+
+Unknown
+
+```
+sudo code ~/.bashrc
+```
+
+## Syntax highlighting
 
 ```
 # Syntax highlighting fails when tabbing on an incomplete command e.g. with:
@@ -12,6 +21,7 @@ _fizsh-expand-or-complete-and-highlight:6: command not found: _zsh_highlight_hig
 
 This is because the `zsh-syntax-highlighting` module is not installed; 
 
-To fix it, you need to install this module within your `~/.zshrc` folder as per the install instructions:
+To fix it, you need to install this module within your `/home/<your-user>/.oh-my-zsh/plugins` folder as per the install instructions:
 
 https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md#in-your-zshrc
+
