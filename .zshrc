@@ -286,7 +286,10 @@ function k8s-app-ingress-points(){
 }
 
 function k8s-set-namespace-production(){
-  kubectl config set-context $(kubectl config current-context) --namespace=production
+  # https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/#setting-the-namespace-preference
+  # permanently save the namespace for all subsequent kubectl commands in that context.
+  kubectl config set-context scassels@production --namespace=production
+  kubectl config view | grep namespace
 }
 
 function k8s-dashboard(){
@@ -301,6 +304,7 @@ function k8s-help(){
   google-chrome https://kubernetes.io/docs/reference/kubectl/cheatsheet/#interacting-with-running-pods
 }
 alias k8s-cheatsheet="k8s-help"
+alias k=kubectl
 
 zle -N _fizsh-expand-or-complete-and-highlight _fizsh-expand-or-complete-and-highlight
 
@@ -323,7 +327,7 @@ export NVM_DIR="$HOME/.nvm"
 
 test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex" 
 [[ -s "$HOME/.kiex/scripts/kiex" ]] && source "$HOME/.kiex/scripts/kiex" # use elixir defined in the kiex default as thee global default
-source /home/stephen/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/vault/vault vault
+source /home/scassels/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh

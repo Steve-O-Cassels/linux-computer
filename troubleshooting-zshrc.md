@@ -1,10 +1,9 @@
-## Set default shell to zsh
+## Installation
 
-Unknown
+Follow this Gist and remember to log off/ log in after the install; otherwise zsh won't work.
 
-```
-sudo code ~/.bashrc
-```
+https://gist.github.com/tsabat/1498393
+
 
 ## Syntax highlighting
 
