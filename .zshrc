@@ -91,7 +91,7 @@ function source_if_exists()
         source "$@"
     else
         if [ ! -z $VERBOSE ]; then
-            echo "could not find $@"
+            echo $fg_bold[green] "could not find $@"
         fi
     fi
 }
@@ -131,6 +131,8 @@ function _fizsh-expand-or-complete-and-highlight() {
   _zsh_highlight_highlighter_root_paint
 }
 
+preexec() { printf "\e[0m"; } # reset font to normal before each command - this is a counter to bold output for echo'd commands
+
 function dockernuke() {
     docker rm -fv $(docker ps -a -q);
     docker rmi -f $(docker images -q);
@@ -149,7 +151,7 @@ function dockernuke() {
            | ;  :neutral_face:
    _____.,-#%&$@%#&#~,._____
 "
-    echo -e $BOOM
+    echo $fg_bold[green] -e $BOOM
 }
 
 function dockerclean(){
@@ -206,15 +208,15 @@ function restart-network-adapter() {
   netstat -i
   # list all PCI devices
   lspci | egrep -i --color 'network|ethernet' 
-  echo flushing/removing IP information from interface then restart networking service
+  echo $fg_bold[green] flushing/removing IP information from interface then restart networking service
   ip addr flush eth0 && systemctl restart networking.service
 }
 
 function connect-internet(){
-  echo restarting network manager
+  echo $fg_bold[green] restarting network manager
   restart-network-manager
   sleep 3
-  echo connecting to vpn
+  echo $fg_bold[green] connecting to vpn
   ~/vpn-sign-in.sh
 }
 
@@ -240,9 +242,9 @@ function backup() {
  cp "$1"{,-backup."$(date +%Y-%m-%d_%H_%M_%S)"} 
 }
 function zshrc-deploy-from-repo(){
-  echo backing up
+  echo $fg_bold[green] backing up $reset_color
   backup ~/.zshrc
-  echo copying to ~/.zshrc
+  echo $fg_bold[green] copying to ~/.zshrc $reset_color
   cp $CODE_FOLDER/linux-computer/.zshrc ~/.zshrc
 }
 function zshrc-move-to-repo(){
@@ -255,19 +257,23 @@ function debug-with-chrome(){
 }
 
 function k8s-list-services(){
+  echo $fg_bold[green] k8s-set-namespace-production $reset_color
   k8s-set-namespace-production
+  echo $fg_bold[green] kubectl get service $reset_color
   kubectl get service
 }
 
 function k8s-pods-for-app(){
   k8s-set-namespace-production
   # expect app as input
+  echo $fg_bold[green] kubectl get pods -l app="$1" $reset_color
   kubectl get pods -l app="$1"
 }
 
 function k8s-pods-by-restart-count(){
   k8s-set-namespace-production
   # get pods for current namespace
+  echo $fg_bold[green] kubectl get pods --sort-by='.status.containerStatuses[0].restartCount' $reset_color
   kubectl get pods --sort-by='.status.containerStatuses[0].restartCount'
 }
 
@@ -275,6 +281,7 @@ function k8s-pod-description(){
   k8s-set-namespace-production
   # expects pod-id as input
   # for current context, describe a pod:
+  echo $fg_bold[green] kubectl describe pod "$@" $reset_color
   kubectl describe pod "$@"
 }
 
@@ -282,20 +289,23 @@ function k8s-app-ingress-points(){
   k8s-set-namespace-production
   # expects app as input
   # identify the ingress
+  echo $fg_bold[green] kubectl get ingress "$@" $reset_color
   kubectl get ingress "$@"
 }
 
 function k8s-set-namespace-production(){
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/#setting-the-namespace-preference
   # permanently save the namespace for all subsequent kubectl commands in that context.
+  echo $fg_bold[green] kubectl config set-context scassels@production --namespace=production $reset_color
   kubectl config set-context scassels@production --namespace=production
+  # echo $fg_bold[green] `kubectl config view | grep namespace` $reset_color
   kubectl config view | grep namespace
 }
 
 function k8s-dashboard(){
-  echo Must be on vpn
+  echo $fg_bold[green] Must be on vpn $reset_color
   ~/vpn-sign-in.sh
-  echo Just skip password in the dialog
+  echo $fg_bold[green] Just skip password in the dialog $reset_color
   # non-blocking cli: background the `kubectl proxy` job with `&` to enable start chrome
   kubectl proxy & google-chrome http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/overview?namespace=default
 }
@@ -309,6 +319,8 @@ alias k=kubectl
 zle -N _fizsh-expand-or-complete-and-highlight _fizsh-expand-or-complete-and-highlight
 
 bindkey "^I" _fizsh-expand-or-complete-and-highlight
+
+preexec() { printf "\e[0m"; } # reset font to normal before each command - this is a counter to bold output for echo'd commands
 
 ################################################
 # Colors
