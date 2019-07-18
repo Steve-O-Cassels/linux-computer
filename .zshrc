@@ -256,44 +256,44 @@ function debug-with-chrome(){
   google-chrome --remote-debugging-port=9223
 }
 
-function k8s-list-services(){
-  echo $fg_bold[green] k8s-set-namespace-production $reset_color
-  k8s-set-namespace-production
+function k-list-services(){
+  echo $fg_bold[green] k-set-namespace-production $reset_color
+  k-set-namespace-production
   echo $fg_bold[green] kubectl get service $reset_color
   kubectl get service
 }
 
-function k8s-pods-for-app(){
-  k8s-set-namespace-production
+function k-pods-for-app(){
+  k-set-namespace-production
   # expect app as input
   echo $fg_bold[green] kubectl get pods -l app="$1" $reset_color
   kubectl get pods -l app="$1"
 }
 
-function k8s-pods-by-restart-count(){
-  k8s-set-namespace-production
+function k-pods-by-restart-count(){
+  k-set-namespace-production
   # get pods for current namespace
   echo $fg_bold[green] kubectl get pods --sort-by='.status.containerStatuses[0].restartCount' $reset_color
   kubectl get pods --sort-by='.status.containerStatuses[0].restartCount'
 }
 
-function k8s-pod-description(){
-  k8s-set-namespace-production
+function k-pod-description(){
+  k-set-namespace-production
   # expects pod-id as input
   # for current context, describe a pod:
   echo $fg_bold[green] kubectl describe pod "$@" $reset_color
   kubectl describe pod "$@"
 }
 
-function k8s-app-ingress-points(){
-  k8s-set-namespace-production
+function k-app-ingress-points(){
+  k-set-namespace-production
   # expects app as input
   # identify the ingress
   echo $fg_bold[green] kubectl get ingress "$@" $reset_color
   kubectl get ingress "$@"
 }
 
-function k8s-set-namespace-production(){
+function k-set-namespace-production(){
   # https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/#setting-the-namespace-preference
   # permanently save the namespace for all subsequent kubectl commands in that context.
   echo $fg_bold[green] kubectl config set-context scassels@production --namespace=production $reset_color
@@ -302,7 +302,7 @@ function k8s-set-namespace-production(){
   kubectl config view | grep namespace
 }
 
-function k8s-dashboard(){
+function k-dashboard(){
   echo $fg_bold[green] Must be on vpn $reset_color
   ~/vpn-sign-in.sh
   echo $fg_bold[green] Just skip password in the dialog $reset_color
@@ -310,11 +310,17 @@ function k8s-dashboard(){
   kubectl proxy & google-chrome http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/#!/overview?namespace=default
 }
 
-function k8s-help(){
+function k-help(){
   google-chrome https://kubernetes.io/docs/reference/kubectl/cheatsheet/#interacting-with-running-pods
 }
-alias k8s-cheatsheet="k8s-help"
+alias k-cheatsheet="k-help"
 alias k=kubectl
+source <(kubectl completion zsh) # setup autocomplete in zsh into the current shell
+source <(kubectl completion zsh)  # setup autocomplete in zsh into the current shell
+echo "if [ $commands[kubectl] ]; then source <(kubectl completion zsh); fi" >> ~/.zshrc # add autocomplete permanently to your zsh shell
+if [ $commands[helm] ]; then
+  source <(helm completion zsh)
+fi
 
 zle -N _fizsh-expand-or-complete-and-highlight _fizsh-expand-or-complete-and-highlight
 
