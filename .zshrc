@@ -318,9 +318,8 @@ alias k=kubectl
 source <(kubectl completion zsh) # setup autocomplete in zsh into the current shell
 source <(kubectl completion zsh)  # setup autocomplete in zsh into the current shell
 echo "if [ $commands[kubectl] ]; then source <(kubectl completion zsh); fi" >> ~/.zshrc # add autocomplete permanently to your zsh shell
-if [ $commands[helm] ]; then
-  source <(helm completion zsh)
-fi
+source <(helm completion zsh)
+echo "if [ $commands[helm] ]; then source <(helm completion zsh); fi" >> ~/.zshrc
 
 zle -N _fizsh-expand-or-complete-and-highlight _fizsh-expand-or-complete-and-highlight
 
