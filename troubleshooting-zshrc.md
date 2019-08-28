@@ -4,6 +4,10 @@ Follow this Gist and remember to log off/ log in after the install; otherwise zs
 
 https://gist.github.com/tsabat/1498393
 
+## Timing a slow terminal start
+
+- Add this on line one of .zshrc: `zmodload zsh/zprof` this file.
+- Add this on last line of .zshrc: `zprof`
 
 ## Syntax highlighting
 
@@ -18,9 +22,8 @@ _fizsh-expand-or-complete-and-highlight:5: command not found: _zsh_highlight_hig
 _fizsh-expand-or-complete-and-highlight:6: command not found: _zsh_highlight_highlighter_root_paint
 ```
 
-This is because the `zsh-syntax-highlighting` module is not installed; 
+This is because the `zsh-syntax-highlighting` module is not installed;
 
 To fix it, you need to install this module within your `/home/<your-user>/.oh-my-zsh/plugins` folder as per the install instructions:
 
 https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md#in-your-zshrc
-

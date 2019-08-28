@@ -45,7 +45,7 @@ COMPLETION_WAITING_DOTS="false"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=( git node npm zsh-syntax-highlighting  )
+plugins=( git node npm npx nvm postgres zsh-syntax-highlighting kubectl helm )
 
 # User configuration
 
@@ -311,15 +311,10 @@ function k-dashboard(){
 }
 
 function k-help(){
-  google-chrome https://kubernetes.io/docs/reference/kubectl/cheatsheet/#interacting-with-running-pods
+  google-chrome https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins/kubectl#aliases https://kubernetes.io/docs/reference/kubectl/cheatsheet/#interacting-with-running-pods
 }
 alias k-cheatsheet="k-help"
 alias k=kubectl
-source <(kubectl completion zsh) # setup autocomplete in zsh into the current shell
-source <(kubectl completion zsh)  # setup autocomplete in zsh into the current shell
-echo "if [ $commands[kubectl] ]; then source <(kubectl completion zsh); fi" >> ~/.zshrc # add autocomplete permanently to your zsh shell
-source <(helm completion zsh)
-echo "if [ $commands[helm] ]; then source <(helm completion zsh); fi" >> ~/.zshrc
 
 zle -N _fizsh-expand-or-complete-and-highlight _fizsh-expand-or-complete-and-highlight
 
