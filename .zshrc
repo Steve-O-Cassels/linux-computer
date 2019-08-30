@@ -256,33 +256,11 @@ function debug-with-chrome(){
   google-chrome --remote-debugging-port=9223
 }
 
-function k-list-services(){
-  echo $fg_bold[green] k-set-namespace-production $reset_color
-  k-set-namespace-production
-  echo $fg_bold[green] kubectl get service $reset_color
-  kubectl get service
-}
-
-function k-pods-for-app(){
-  k-set-namespace-production
-  # expect app as input
-  echo $fg_bold[green] kubectl get pods -l app="$1" $reset_color
-  kubectl get pods -l app="$1"
-}
-
 function k-pods-by-restart-count(){
   k-set-namespace-production
   # get pods for current namespace
   echo $fg_bold[green] kubectl get pods --sort-by='.status.containerStatuses[0].restartCount' $reset_color
   kubectl get pods --sort-by='.status.containerStatuses[0].restartCount'
-}
-
-function k-pod-description(){
-  k-set-namespace-production
-  # expects pod-id as input
-  # for current context, describe a pod:
-  echo $fg_bold[green] kubectl describe pod "$@" $reset_color
-  kubectl describe pod "$@"
 }
 
 function k-app-ingress-points(){
@@ -291,15 +269,6 @@ function k-app-ingress-points(){
   # identify the ingress
   echo $fg_bold[green] kubectl get ingress "$@" $reset_color
   kubectl get ingress "$@"
-}
-
-function k-set-namespace-production(){
-  # https://kubernetes.io/docs/concepts/overview/working-with-objects/namespaces/#setting-the-namespace-preference
-  # permanently save the namespace for all subsequent kubectl commands in that context.
-  echo $fg_bold[green] kubectl config set-context scassels@production --namespace=production $reset_color
-  kubectl config set-context scassels@production --namespace=production
-  # echo $fg_bold[green] `kubectl config view | grep namespace` $reset_color
-  kubectl config view | grep namespace
 }
 
 function k-dashboard(){
