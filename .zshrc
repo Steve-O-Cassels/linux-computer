@@ -1,6 +1,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
-CODE_FOLDER=$HOME/work
+WORK_FOLDER=$HOME/work
+TRAINING_FOLDER=$HOME/training
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
@@ -162,7 +163,12 @@ alias s="git status"
 alias git-reset-to-remote="git reset --hard origin/master"
 
 function work() {
-   cd ~/work/"$@" && code .
+   cd $WORK_FOLDER/"$@" && code .
+   
+}
+
+function training() {
+  cd $TRAINING_FOLDER/"$@" && code .
 }
 
 function config-the-git(){
@@ -198,6 +204,10 @@ function fiddler() {
 
 function port-status() {
   netstat -tulpn
+}
+
+function find-folder() {
+  find ~/ -name "$@" -type d
 }
 
 function restart-network-adapter() {
@@ -245,10 +255,10 @@ function zshrc-deploy-from-repo(){
   echo $fg_bold[green] backing up $reset_color
   backup ~/.zshrc
   echo $fg_bold[green] copying to ~/.zshrc $reset_color
-  cp $CODE_FOLDER/linux-computer/.zshrc ~/.zshrc
+  cp $WORK_FOLDER/linux-computer/.zshrc ~/.zshrc
 }
 function zshrc-move-to-repo(){
-  cp ~/.zshrc $CODE_FOLDER/linux-computer/.zshrc
+  cp ~/.zshrc $WORK_FOLDER/linux-computer/.zshrc
 }
 alias zshrc-save-to-repo="zshrc-move-to-repo"
 
