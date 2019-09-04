@@ -254,10 +254,10 @@ function zshrc-deploy-from-repo(){
   echo $fg_bold[green] copying to ~/.zshrc $reset_color
   cp $WORK_FOLDER/linux-computer/.zshrc ~/.zshrc
 }
-function zshrc-move-to-repo(){
+function zshrc-copy-to-repo(){
   cp ~/.zshrc $WORK_FOLDER/linux-computer/.zshrc
 }
-alias zshrc-save-to-repo="zshrc-move-to-repo"
+alias zshrc-copy-to-repo="zshrc-move-to-repo"
 
 function training-to-dropbox(){
   # remove node_modules first
@@ -274,7 +274,6 @@ alias training-pull="training-from-dropbox"
 function find-folder() {
   find ~/ -name "$@" -type d
 }
-
 
 function debug-with-chrome(){
   google-chrome --remote-debugging-port=9223
@@ -305,6 +304,9 @@ function k-dashboard(){
 
 function k-help(){
   google-chrome https://github.com/robbyrussell/oh-my-zsh/tree/master/plugins/kubectl#aliases https://kubernetes.io/docs/reference/kubectl/cheatsheet/#interacting-with-running-pods
+}
+function zsh-help(){
+  google-chrome https://github.com/robbyrussell/oh-my-zsh/wiki/Cheatsheet
 }
 alias k-cheatsheet="k-help"
 alias k=kubectl
