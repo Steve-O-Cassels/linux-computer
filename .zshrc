@@ -2,6 +2,7 @@
 export ZSH=$HOME/.oh-my-zsh
 WORK_FOLDER=$HOME/work
 TRAINING_FOLDER=$HOME/training
+DROPBOX_FOLDER=$HOME/Dropbox
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
@@ -206,10 +207,6 @@ function port-status() {
   netstat -tulpn
 }
 
-function find-folder() {
-  find ~/ -name "$@" -type d
-}
-
 function restart-network-adapter() {
   # https://sysinfo.io/restart-network-ubuntu-16-04-xenial-xerus-linux/
   # list connections
@@ -261,6 +258,23 @@ function zshrc-move-to-repo(){
   cp ~/.zshrc $WORK_FOLDER/linux-computer/.zshrc
 }
 alias zshrc-save-to-repo="zshrc-move-to-repo"
+
+function training-to-dropbox(){
+  # remove node_modules first
+  find $TRAINING_FOLDER -type d -name "node_modules" -exec rm -rf {} +
+  cp -r $TRAINING_FOLDER $DROPBOX_FOLDER
+}
+alias training-push="training-to-dropbox"
+
+function training-from-dropbox(){
+  cp $DROPBOX_FOLDER $TRAINING_FOLDER 
+}
+alias training-pull="training-from-dropbox"
+
+function find-folder() {
+  find ~/ -name "$@" -type d
+}
+
 
 function debug-with-chrome(){
   google-chrome --remote-debugging-port=9223
