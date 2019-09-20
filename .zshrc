@@ -163,9 +163,12 @@ function dockerclean(){
 alias s="git status"
 alias git-reset-to-remote="git reset --hard origin/master"
 
+function latest() {
+   work("$@")
+}
+
 function work() {
    cd $WORK_FOLDER/"$@" && code .
-   
 }
 
 function training() {
@@ -310,6 +313,7 @@ function zsh-help(){
 }
 alias k-cheatsheet="k-help"
 alias k=kubectl
+alias whereami=pwd
 
 zle -N _fizsh-expand-or-complete-and-highlight _fizsh-expand-or-complete-and-highlight
 
