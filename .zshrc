@@ -265,12 +265,12 @@ alias zshrc-copy-to-repo="zshrc-move-to-repo"
 function training-to-dropbox(){
   # remove node_modules first
   find $TRAINING_FOLDER -type d -name "node_modules" -exec rm -rf {} +
-  cp -r $TRAINING_FOLDER $DROPBOX_FOLDER
+  cp -a -u -v $TRAINING_FOLDER/. $DROPBOX_FOLDER/
 }
 alias training-push="training-to-dropbox"
 
 function training-from-dropbox(){
-  cp $DROPBOX_FOLDER $TRAINING_FOLDER 
+  cp -a -u -v $DROPBOX_FOLDER/training/. $TRAINING_FOLDER/ 
 }
 alias training-pull="training-from-dropbox"
 
