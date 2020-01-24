@@ -47,7 +47,7 @@ COMPLETION_WAITING_DOTS="false"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=( git node npm npx nvm postgres zsh-syntax-highlighting kubectl helm )
+plugins=( git golang node npm npx nvm postgres zsh-syntax-highlighting kubectl helm )
 
 # User configuration
 
@@ -109,6 +109,7 @@ source_if_exists ~/.dots/ff.bash
 source_if_exists ~/.dots/fancy-ctrl-z.zsh
 source_if_exists ~/.zsh_functions
 source_if_exists ~/proxyconf.sh
+source_if_exists ~/.gvm/scripts/gvm
 
 # Hook in z jump
 #function precmd () {
@@ -173,6 +174,10 @@ function work() {
 
 function training() {
   cd $TRAINING_FOLDER/"$@" && code .
+}
+
+function thetree() {
+  cd /home/scassels/go/src/github.com/findmypast/rootscity-trees/ && code .
 }
 
 function config-the-git(){
@@ -342,3 +347,6 @@ test -s "$HOME/.kiex/scripts/kiex" && source "$HOME/.kiex/scripts/kiex"
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /opt/vault/vault vault
 source /home/scassels/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+export KUBE_EDITOR="nano"
+export GOPATH="$HOME/go"
+export PATH="$PATH:$GOPATH/bin"
