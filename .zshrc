@@ -3,6 +3,7 @@ export ZSH=$HOME/.oh-my-zsh
 WORK_FOLDER=$HOME/work
 TRAINING_FOLDER=$HOME/training
 DROPBOX_FOLDER=$HOME/Dropbox
+DIARY_FOLDER=$HOME/Dropbox/DailyNotes
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
@@ -174,6 +175,10 @@ function work() {
 
 function training() {
   cd $TRAINING_FOLDER/"$@" && code .
+}
+
+function diary() {
+  cd $DIARY_FOLDER/"$@" && code .
 }
 
 function thetree() {
