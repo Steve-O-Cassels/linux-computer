@@ -4,6 +4,7 @@ WORK_FOLDER=$HOME/work
 TRAINING_FOLDER=$HOME/training
 DROPBOX_FOLDER=$HOME/Dropbox
 DIARY_FOLDER=$HOME/Dropbox/DailyNotes
+TOOLS_FOLDER=$HOME/tools
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
@@ -354,4 +355,8 @@ complete -o nospace -C /opt/vault/vault vault
 source /home/scassels/.oh-my-zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 export KUBE_EDITOR="nano"
 export GOPATH="$HOME/go"
+export VAULT_PATH="$TOOLS_FOLDER/vault/vault_1.3.2_linux_amd64"
 export PATH="$PATH:$GOPATH/bin"
+export PATH="$PATH:$VAULT_PATH"
+
+complete -o nospace -C $VAULT_PATH/vault vault #enable intellisense for vault
