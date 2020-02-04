@@ -179,7 +179,7 @@ function training() {
 }
 
 function diary() {
-  cd $DIARY_FOLDER/"$@" && code .
+  cd $DIARY_FOLDER/ && code Diary.code-workspace
 }
 
 function thetree() {
