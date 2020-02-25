@@ -358,5 +358,6 @@ export GOPATH="$HOME/go"
 export VAULT_PATH="$TOOLS_FOLDER/vault/vault_1.3.2_linux_amd64"
 export PATH="$PATH:$GOPATH/bin"
 export PATH="$PATH:$VAULT_PATH"
+export PATH="$PATH:$TOOLS_FOLDER/k9s/k9s_Linux_x86_64"
 
 complete -o nospace -C $VAULT_PATH/vault vault #enable intellisense for vault
